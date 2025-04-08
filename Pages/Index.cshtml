@@ -1,0 +1,80 @@
+﻿@page
+@model IndexModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>eXpense Tracker</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+
+        .page-container {
+            height: 100vh;
+            position: relative;
+        }
+
+        .money-hand-image {
+            height: 100%;
+            width: 100%;
+            background-image: url('/images/money-hand.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+
+            .money-hand-image h1 {
+                font-size: 2.5rem;
+                font-weight: bold;
+                margin-bottom: 0.5rem;
+                text-transform: uppercase;
+            }
+
+            .money-hand-image p {
+                font-size: 1.25rem;
+                margin-bottom: 2rem;
+            }
+
+        .skip-button {
+            background: transparent;
+            color: white;
+            border: 1px solid white;
+            padding: 8px 25px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <div class="money-hand-image">
+            <h1>eXpense Tracker</h1>
+            <p>Smarter Budgeting Better Growth</p>
+            <a asp-page="/Login" class="skip-button">SKIP</a>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>

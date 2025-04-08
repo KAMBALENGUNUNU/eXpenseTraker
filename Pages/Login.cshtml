@@ -1,0 +1,194 @@
+﻿@page
+@model ExpenseTracker.Pages.LoginModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - eXpense Tracker</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .page-container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .image-section {
+            flex: 1;
+            background: url('/images/money-hand.jpg') center/cover no-repeat;
+        }
+
+        .form-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .form-content {
+            width: 100%;
+            max-width: 350px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2e7d32; /* Green color for the title */
+        }
+
+        .form-label {
+            font-size: 14px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-top: -10px;
+            margin-bottom: 15px;
+            font-size: 12px;
+        }
+
+            .forgot-password a {
+                color: #2e7d32;
+                text-decoration: none;
+            }
+
+        .login-button {
+            background: #2e7d32; /* Green button */
+            color: #fff;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            margin: 15px 0;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+
+        .signup-text {
+            text-align: center;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+
+            .signup-text a {
+                font-weight: bold;
+                color: #2e7d32; /* Green color for sign up link */
+                text-decoration: none;
+            }
+
+        .google-button {
+            border: 1px solid #ddd;
+            background: #fff;
+            padding: 10px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+            .google-button img {
+                margin-right: 10px;
+                height: 18px;
+            }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+            .input-with-icon i {
+                position: absolute;
+                left: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #888;
+            }
+
+            .input-with-icon input {
+                padding-left: 30px;
+            }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <div class="image-section"></div>
+        <div class="form-section">
+            <div class="form-content">
+                <h1>Welcome to eXpense Tracker</h1>
+
+                <form method="post" id="loginForm">
+                    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+                    <label class="form-label">Email or Phone Number</label>
+                    <div class="input-with-icon">
+                        <i class="bi bi-envelope"></i>
+                        <input type="text" class="form-control" placeholder="Enter your email or phone number"
+                               asp-for="Input.Email" autocomplete="username" aria-required="true">
+                    </div>
+
+                    <label class="form-label">Password</label>
+                    <div class="input-with-icon">
+                        <i class="bi bi-lock"></i>
+                        <input type="password" class="form-control" placeholder="Enter password"
+                               asp-for="Input.Password" autocomplete="current-password" aria-required="true">
+                    </div>
+
+                    <div class="forgot-password">
+                        <a href="#">Forgot Password?</a>
+                    </div>
+
+                    <button type="submit" class="login-button">Login</button>
+                </form>
+
+                <div class="signup-text">
+                    Don't have an account? <a href="/Register">Sign Up</a>
+                </div>
+
+                <button class="google-button">
+                    <img src="~/images/google-logo.png" alt="Google logo">
+                    Continue with Google
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function() {
+            // Handle the login form submission
+            $("#loginForm").on("submit", function(e) {
+                // The form will be processed by the page model
+                // The model will handle the redirect to dashboard
+            });
+        });
+    </script>
+</body>
+</html>
