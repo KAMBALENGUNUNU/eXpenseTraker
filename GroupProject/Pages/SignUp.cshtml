@@ -1,0 +1,204 @@
+﻿@page
+@model TuesdayCore.Pages.SignUpModel
+@{
+    ViewData["Title"] = "Sign Up - Expense Tracker";
+    Layout = null; // Disable the layout to ensure full-page design
+}
+
+<style>
+    html, body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        color: #333;
+        background: none;
+    }
+
+    .main-container {
+        display: flex;
+        width: 100vw;
+        height: 100vh;
+        background-color: white;
+        overflow: hidden;
+    }
+
+    .image-section {
+        flex: 1;
+        background: url('/Images/money.jpg') no-repeat center center;
+        background-size: cover;
+    }
+
+    .signup-container {
+        flex: 1;
+        padding: 1rem; /* Reduced padding to fit more content */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+        background-color: white;
+        overflow-y: auto; /* Enable vertical scrolling if content overflows */
+        height: 100vh; /* Ensure the container takes the full height */
+    }
+
+    .app-title {
+        font-size: 1.5rem; /* Reduced font size to fit better */
+        font-weight: bold;
+        color: #2e7d32;
+        margin-bottom: 1rem; /* Reduced margin */
+    }
+
+    .form-group {
+        margin-bottom: 0.8rem; /* Reduced margin to fit more content */
+        text-align: left;
+        width: 100%;
+    }
+
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px; /* Reduced padding to fit better */
+            font-size: 0.9rem; /* Reduced font size */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+    .signup-btn {
+        background-color: #2e7d32;
+        color: white;
+        padding: 10px; /* Reduced padding */
+        font-size: 0.9rem; /* Reduced font size */
+        border: none;
+        border-radius: 5px;
+        width: 100%;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        text-transform: uppercase;
+        font-weight: 600;
+    }
+
+        .signup-btn:hover {
+            background-color: #1b5e20;
+        }
+
+    .links {
+        margin-top: 0.8rem; /* Reduced margin */
+        font-size: 0.8rem; /* Reduced font size */
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+
+        .links a {
+            color: #2e7d32;
+            text-decoration: none;
+        }
+
+            .links a:hover {
+                text-decoration: underline;
+            }
+
+    .google-btn {
+        margin-top: 0.8rem; /* Reduced margin */
+        background-color: white;
+        color: #333;
+        padding: 8px; /* Reduced padding */
+        font-size: 0.8rem; /* Reduced font size */
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 100%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px; /* Reduced gap */
+    }
+
+        .google-btn img {
+            width: 18px; /* Reduced size */
+            height: 18px;
+        }
+
+        .google-btn:hover {
+            background-color: #f5f5f5;
+        }
+
+    .error-message {
+        color: red;
+        font-size: 0.8rem; /* Reduced font size */
+        margin-bottom: 0.8rem;
+    }
+
+    .success-message {
+        color: green;
+        font-size: 0.8rem; /* Reduced font size */
+        margin-bottom: 0.8rem;
+    }
+</style>
+
+<div class="main-container">
+    <div class="image-section"></div>
+    <div class="signup-container">
+        <h1 class="app-title">Sign Up to eXpense Tracker</h1>
+
+        @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+        {
+            <div class="error-message">@Model.ErrorMessage</div>
+        }
+        @if (!string.IsNullOrEmpty(Model.SuccessMessage))
+        {
+            <div class="success-message">@Model.SuccessMessage</div>
+        }
+
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="Names">Names</label>
+                <input asp-for="Names" placeholder="Enter your names" required />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Email">Email</label>
+                <input asp-for="Email" type="email" placeholder="Enter your email" required />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Phone">Phone</label>
+                <input asp-for="Phone" type="tel" placeholder="Enter your phone number"
+                       required />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Password">Password</label>
+                <input asp-for="Password" type="password" placeholder="Enter your password" required />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ConfirmPassword">Confirm Password</label>
+                <input asp-for="ConfirmPassword" type="password" placeholder="Confirm your password" required />
+            </div>
+
+            <button type="submit" class="signup-btn">Create Account</button>
+
+            <div class="links">
+                <a asp-page="/Login">Already have an account? Login</a>
+            </div>
+
+            <button type="button" class="google-btn">
+                <img src="https://www.google.com/favicon.ico" alt="Google Icon" />
+                Continue with Google
+            </button>
+        </form>
+    </div>
+</div>

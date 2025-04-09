@@ -1,0 +1,559 @@
+﻿@page "/Dashboard"
+@model ExpenseTracker.Pages.DashboardModel
+@{
+    ViewData["Title"] = "eXpense Tracker";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2e8b57;
+            --secondary: #f8f9fa;
+            --danger: #dc3545;
+            --success: #28a745;
+            --warning: #ffc107;
+            --info: #17a2b8;
+            --pink: #ff69b4;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .sidebar {
+            width: 220px;
+            background-color: white;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            border-right: 1px solid #e0e0e0;
+            z-index: 1000;
+        }
+
+        .main-content {
+            margin-left: 220px;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .logo {
+            padding: 20px;
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.5rem;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+        }
+
+        .menu-item {
+            padding: 15px 20px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            transition: all 0.3s;
+            border-radius: 8px;
+            margin: 5px 10px;
+        }
+
+            .menu-item:hover, .menu-item.active {
+                background-color: #f0f0f0;
+                color: var(--primary);
+            }
+
+            .menu-item i {
+                margin-right: 10px;
+                width: 20px;
+                text-align: center;
+            }
+
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            border: none;
+        }
+
+        .card-title {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .card-amount {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .card-subtitle {
+            font-size: 0.75rem;
+            color: #999;
+        }
+
+        .income-amount {
+            color: var(--primary);
+        }
+
+        .expense-amount {
+            color: var(--danger);
+        }
+
+        .balance-amount {
+            color: var(--info);
+        }
+
+        .savings-amount {
+            color: var(--pink);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+        }
+
+            .user-profile img {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                margin-right: 10px;
+            }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            border-radius: 20px;
+            padding: 5px 15px;
+            width: 300px;
+        }
+
+            .search-bar input {
+                border: none;
+                background: none;
+                outline: none;
+                width: 100%;
+                padding: 5px;
+            }
+
+            .search-bar i {
+                color: #999;
+                margin-right: 10px;
+            }
+
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background-color: var(--success);
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        .transaction-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .transaction-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+
+        .transaction-details {
+            flex-grow: 1;
+        }
+
+        .transaction-name {
+            font-weight: 600;
+            margin-bottom: 0;
+        }
+
+        .transaction-date {
+            font-size: 0.75rem;
+            color: #999;
+        }
+
+        .transaction-amount {
+            font-weight: 600;
+        }
+
+        .chart-container {
+            height: 100px;
+            margin-top: 20px;
+        }
+
+        .chart-line {
+            fill: none;
+            stroke: var(--primary);
+            stroke-width: 2;
+        }
+
+        .chart-area {
+            fill: rgba(46, 139, 87, 0.1);
+        }
+
+        .chart-dot {
+            fill: var(--primary);
+        }
+
+        .tab-button {
+            background: none;
+            border: none;
+            padding: 10px 20px;
+            color: #666;
+            font-size: 1rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+
+            .tab-button.active {
+                color: var(--primary);
+                border-bottom: 2px solid var(--primary);
+                font-weight: 600;
+            }
+
+        .attendance-chart {
+            width: 120px;
+            height: 120px;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .attendance-chart-circle {
+            fill: none;
+            stroke-width: 10;
+        }
+
+        .attendance-chart-text {
+            font-size: 24px;
+            font-weight: bold;
+            text-anchor: middle;
+            dominant-baseline: middle;
+        }
+
+        .attendance-type {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .attendance-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .attendance-value {
+            margin-left: auto;
+        }
+
+        .view-details-btn {
+            background-color: #94a3b8;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 15px;
+            width: 100%;
+        }
+
+        .period-tabs {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .period-tab {
+            flex: 1;
+            text-align: center;
+            padding: 5px;
+            font-size: 0.8rem;
+            color: #666;
+            cursor: pointer;
+        }
+
+            .period-tab.active {
+                font-weight: bold;
+                color: #333;
+                border-bottom: 2px solid var(--primary);
+            }
+
+        .bar-chart-container {
+            height: 150px;
+            margin-top: 20px;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .bar {
+            background-color: var(--primary);
+            width: 15px;
+            border-radius: 3px 3px 0 0;
+            margin: 0 auto;
+        }
+
+        .day-label {
+            font-size: 0.7rem;
+            text-align: center;
+            color: #999;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <span style="color: #2e8b57;">e</span>Xpense Tracker
+        </div>
+        <div class="menu">
+            <a href="/Dashboard" class="menu-item active">
+                <i class="fas fa-th-large"></i> Dashboard
+            </a>
+            <a href="/Transactions" class="menu-item">
+                <i class="fas fa-exchange-alt"></i> Transactions
+            </a>
+            <a href="/Budget" class="menu-item">
+                <i class="fas fa-chart-pie"></i> Budget
+            </a>
+            <a href="/Reports" class="menu-item">
+                <i class="fas fa-chart-bar"></i> Reports
+            </a>
+            <a href="/Settings" class="menu-item">
+                <i class="fas fa-cog"></i> Settings
+            </a>
+            <a href="/Logout" class="menu-item">
+                <i class="fas fa-sign-out-alt"></i> Log Out
+            </a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <h4>Dashboard</h4>
+            <div class="d-flex align-items-center">
+                <div class="search-bar me-4">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Type a command or search...">
+                </div>
+                <div class="user-profile">
+                    <i class="fas fa-bell me-3"></i>
+                    <img src="@Model.UserProfileImage" alt="Profile">
+                    <div class="ms-2">
+                        <div>@Model.UserName</div>
+                        <div><span class="status-indicator"></span>Online</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card p-3">
+                    <div class="card-title">Monthly Income</div>
+                    <div class="card-amount income-amount">$@Model.MonthlyIncome.ToString("N2")</div>
+                    <div class="card-subtitle">+5% from last month</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card p-3">
+                    <div class="card-title">Monthly Expenses</div>
+                    <div class="card-amount expense-amount">$@Model.MonthlyExpenses.ToString("N2")</div>
+                    <div class="card-subtitle">+5% from last month</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card p-3">
+                    <div class="card-title">Current Balance</div>
+                    <div class="card-amount balance-amount">$@Model.MonthlyBudget.ToString("N2")</div>
+                    <div class="card-subtitle">+5% from last month</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card p-3">
+                    <div class="card-title">Saving Goals</div>
+                    <div class="card-amount savings-amount">$@Model.TotalSavings.ToString("N2")</div>
+                    <div class="card-subtitle">+5% from last month</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <div class="card p-3">
+                    <h6 class="mb-3">Recents Transactions</h6>
+                    <div class="transaction-item">
+                        <div class="transaction-icon" style="background-color: #2e8b57; color: white;">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <div class="transaction-details">
+                            <p class="transaction-name">Rent</p>
+                            <p class="transaction-date">2023-02-01, 14:38</p>
+                        </div>
+                        <div class="transaction-amount">$600</div>
+                    </div>
+                    <div class="transaction-item">
+                        <div class="transaction-icon" style="background-color: #dc3545; color: white;">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <div class="transaction-details">
+                            <p class="transaction-name">Groceries</p>
+                            <p class="transaction-date">2023-02-03, 16:20</p>
+                        </div>
+                        <div class="transaction-amount">$200</div>
+                    </div>
+                    <div class="transaction-item">
+                        <div class="transaction-icon" style="background-color: #ffc107; color: white;">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <div class="transaction-details">
+                            <p class="transaction-name">Others</p>
+                            <p class="transaction-date">2023-02-05, 12:45</p>
+                        </div>
+                        <div class="transaction-amount">$20</div>
+                    </div>
+                    <div class="transaction-item">
+                        <div class="transaction-icon" style="background-color: #e0e0e0; color: #333;">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </div>
+                        <div class="transaction-details">
+                            <p class="transaction-name">Others</p>
+                            <p class="transaction-date">2023-02-04, 14:38</p>
+                        </div>
+                        <div class="transaction-amount">$15</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-3">
+                    <h6 class="mb-3">Savings Transactions</h6>
+                    <div class="period-tabs">
+                        <div class="period-tab">Day</div>
+                        <div class="period-tab">Week</div>
+                        <div class="period-tab active">Month</div>
+                        <div class="period-tab">Year</div>
+                    </div>
+                    <div class="text-center mt-3 mb-3">
+                        <h3>@Model.TotalSavings.ToString("N2")</h3>
+                    </div>
+                    <div class="chart-container">
+                        <svg width="100%" height="100%" viewBox="0 0 300 100">
+                            <path d="M0,80 C20,70 40,60 60,40 C80,20 100,10 120,20 C140,30 160,80 180,70 C200,60 220,50 240,30 C260,20 280,10 300,15" class="chart-line" />
+                            <path d="M0,80 C20,70 40,60 60,40 C80,20 100,10 120,20 C140,30 160,80 180,70 C200,60 220,50 240,30 C260,20 280,10 300,15 L300,100 L0,100 Z" class="chart-area" />
+                            <circle cx="60" cy="40" r="3" class="chart-dot" />
+                            <circle cx="120" cy="20" r="3" class="chart-dot" />
+                            <circle cx="180" cy="70" r="3" class="chart-dot" />
+                            <circle cx="240" cy="30" r="3" class="chart-dot" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-3">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h6 class="m-0">Attendance Overview</h6>
+                        <select class="form-select form-select-sm" style="width: auto;">
+                            <option>This Week</option>
+                            <option>Last Week</option>
+                            <option>This Month</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="attendance-chart">
+                                <svg width="100%" height="100%" viewBox="0 0 100 100">
+                                    <!-- Background circle -->
+                                    <circle cx="50" cy="50" r="45" fill="none" stroke="#e0e0e0" stroke-width="10" />
+                                    <!-- Segments -->
+                                    <circle cx="50" cy="50" r="45" fill="none" stroke="#2e8b57" stroke-width="10" stroke-dasharray="70.5 282" stroke-dashoffset="0" transform="rotate(-90 50 50)" />
+                                    <circle cx="50" cy="50" r="45" fill="none" stroke="#ffc107" stroke-width="10" stroke-dasharray="42.3 282" stroke-dashoffset="-70.5" transform="rotate(-90 50 50)" />
+                                    <circle cx="50" cy="50" r="45" fill="none" stroke="#dc3545" stroke-width="10" stroke-dasharray="28.2 282" stroke-dashoffset="-112.8" transform="rotate(-90 50 50)" />
+                                    <circle cx="50" cy="50" r="45" fill="none" stroke="#6c757d" stroke-width="10" stroke-dasharray="28.2 282" stroke-dashoffset="-141" transform="rotate(-90 50 50)" />
+                                    <!-- Center text -->
+                                    <text x="50" y="50" class="attendance-chart-text">@Model.DailyAverage</text>
+                                    <text x="50" y="65" font-size="12" text-anchor="middle">Total Attendance</text>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mt-2">
+                                <h6>Status</h6>
+                                <div class="attendance-type">
+                                    <div class="attendance-color" style="background-color: #6c757d;"></div>
+                                    <div>Average</div>
+                                    <div class="attendance-value">75%</div>
+                                </div>
+                                <div class="attendance-type">
+                                    <div class="attendance-color" style="background-color: #ffc107;"></div>
+                                    <div>Higher</div>
+                                    <div class="attendance-value">15%</div>
+                                </div>
+                                <div class="attendance-type">
+                                    <div class="attendance-color" style="background-color: #dc3545;"></div>
+                                    <div>Lower</div>
+                                    <div class="attendance-value">10%</div>
+                                </div>
+                                <div class="attendance-type">
+                                    <div class="attendance-color" style="background-color: #2e8b57;"></div>
+                                    <div>Others</div>
+                                    <div class="attendance-value">10%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="view-details-btn mt-3">View Details</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card p-3 mt-3">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                    <button class="tab-button active">Summary</button>
+                    <button class="tab-button">Transactions</button>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="dropdown me-2">
+                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button">
+                            Last 14 Days
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="bar-chart-container">
+                @foreach (var transaction in Model.DailyTransactions)
+                {
+                    <div class="col" style="height: 100%;">
+                        <div class="bar" style="height: @(transaction.Amount / 2)%;"></div>
+                        <div class="day-label">@transaction.Date</div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

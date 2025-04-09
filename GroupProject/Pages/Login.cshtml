@@ -1,0 +1,180 @@
+﻿@page
+@model TuesdayCore.Pages.LoginModel
+@{
+    ViewData["Title"] = "Login - Expense Tracker";
+    Layout = null; // Ensure full-page design, consistent with SignUp.cshtml
+}
+
+<style>
+    html, body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden; /* Prevent scrolling */
+        color: #333;
+        background: none;
+    }
+
+    .main-container {
+        display: flex;
+        width: 100vw; /* Full viewport width */
+        height: 100vh; /* Full viewport height */
+        background-color: white;
+        overflow: hidden; /* Ensure no overflow */
+    }
+
+    .image-section {
+        flex: 1; /* Takes up half the space, consistent with SignUp */
+        background: url('/Images/money.jpg') no-repeat center center;
+        background-size: cover;
+    }
+
+    .login-container {
+        flex: 1;
+        padding: 1rem; /* Match SignUp padding */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        max-width: 400px; /* Match SignUp max-width */
+        text-align: center;
+        background-color: white;
+        overflow-y: auto; /* Allow scrolling if content overflows */
+        height: 100vh; /* Full height to match SignUp */
+    }
+
+    .app-title {
+        font-size: 1.5rem; /* Match SignUp font size */
+        font-weight: bold;
+        color: #2e7d32;
+        margin-bottom: 1rem; /* Match SignUp margin */
+    }
+
+    .form-group {
+        margin-bottom: 0.8rem; /* Match SignUp spacing */
+        text-align: left;
+        width: 100%;
+    }
+
+        .form-group label {
+            display: block;
+            font-size: 0.9rem; /* Match SignUp font size */
+            margin-bottom: 0.3rem;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px; /* Match SignUp padding */
+            font-size: 0.9rem; /* Match SignUp font size */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+    .login-btn {
+        background-color: #2e7d32;
+        color: white;
+        padding: 10px; /* Match SignUp padding */
+        font-size: 0.9rem; /* Match SignUp font size */
+        border: none;
+        border-radius: 5px;
+        width: 100%;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        text-transform: uppercase;
+        font-weight: 600;
+    }
+
+        .login-btn:hover {
+            background-color: #1b5e20;
+        }
+
+    .links {
+        margin-top: 0.8rem; /* Match SignUp spacing */
+        font-size: 0.8rem; /* Match SignUp font size */
+        display: flex;
+        justify-content: space-between; /* Match SignUp alignment */
+        width: 100%;
+    }
+
+        .links a {
+            color: #2e7d32;
+            text-decoration: none;
+        }
+
+            .links a:hover {
+                text-decoration: underline;
+            }
+
+    .google-btn {
+        margin-top: 0.8rem; /* Match SignUp spacing */
+        background-color: white;
+        color: #333;
+        padding: 8px; /* Match SignUp padding */
+        font-size: 0.8rem; /* Match SignUp font size */
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 100%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px; /* Match SignUp gap */
+    }
+
+        .google-btn img {
+            width: 18px; /* Match SignUp size */
+            height: 18px;
+        }
+
+        .google-btn:hover {
+            background-color: #f5f5f5;
+        }
+
+    .error-message {
+        color: red;
+        font-size: 0.8rem; /* Match SignUp font size */
+        margin-bottom: 0.8rem;
+    }
+</style>
+
+<div class="main-container">
+    <div class="image-section"></div>
+    <div class="login-container">
+        <h1 class="app-title">Welcome to eXpense Tracker</h1>
+
+        @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+        {
+            <div class="error-message">@Model.ErrorMessage</div>
+        }
+
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="EmailOrPhone">Email or Phone Number</label>
+                <input asp-for="EmailOrPhone" placeholder="Enter your email or phone number" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Password">Password</label>
+                <input asp-for="Password" type="password" placeholder="Password" />
+            </div>
+
+            <button type="submit" class="login-btn">Login</button>
+            <a asp-page="/Dashboard"></a>
+
+            <div class="links">
+                <a href="#">Forgot Password?</a>
+                <a asp-page="/SignUp">Don't have an account? Sign Up</a>
+            </div>
+
+            <button type="button" class="google-btn">
+                <img src="https://www.google.com/favicon.ico" alt="Google Icon" />
+                Continue with Google
+            </button>
+        </form>
+    </div>
+</div>

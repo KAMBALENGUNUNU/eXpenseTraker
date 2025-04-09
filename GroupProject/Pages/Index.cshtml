@@ -1,0 +1,84 @@
+﻿@page
+@model Project.Pages.IndexModel
+@{
+    ViewData["Title"] = "Expense Tracker";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: white;
+            background-image: url('/Images/money.jpg'); /* Ensure this image exists in wwwroot/Images/ */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .landing-container {
+            text-align: center;
+            padding: 2rem;
+            max-width: 600px;
+        }
+
+        .logo {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .tagline {
+            font-size: 1.8rem;
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+
+        .btn-skip {
+            background-color: #2e8b57; /* Green background to match the first image */
+            color: white;
+            border: none; /* Remove the white border */
+            padding: 0.8rem 2.5rem;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+            .btn-skip:hover {
+                background-color: #257a4a; /* Slightly darker green on hover */
+            }
+
+        .animation {
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+      
+    </style>
+</head>
+<body>
+    <div class="landing-container animation">
+        <div class="logo">eXpense Tracker</div>
+        <div class="tagline">Smarter Budgeting Better Growth</div>
+        <form method="post">
+            <button type="submit" asp-page-handler="Skip" class="btn-skip">Skip</button>
+        </form>
+    </div>
+</body>
+</html>
