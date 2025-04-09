@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\HP\\Source\\Repos\\eXpenseTraker\\ExpenseTracker.csproj": {}
+    "C:\\Users\\HP\\source\\repos\\eXpenseTraker\\ExpenseTracker.csproj": {}
   },
   "projects": {
-    "C:\\Users\\HP\\Source\\Repos\\eXpenseTraker\\ExpenseTracker.csproj": {
+    "C:\\Users\\HP\\source\\repos\\eXpenseTraker\\ExpenseTracker.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\HP\\Source\\Repos\\eXpenseTraker\\ExpenseTracker.csproj",
+        "projectUniqueName": "C:\\Users\\HP\\source\\repos\\eXpenseTraker\\ExpenseTracker.csproj",
         "projectName": "ExpenseTracker",
-        "projectPath": "C:\\Users\\HP\\Source\\Repos\\eXpenseTraker\\ExpenseTracker.csproj",
+        "projectPath": "C:\\Users\\HP\\source\\repos\\eXpenseTraker\\ExpenseTracker.csproj",
         "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\HP\\Source\\Repos\\eXpenseTraker\\obj\\",
         "projectStyle": "PackageReference",
