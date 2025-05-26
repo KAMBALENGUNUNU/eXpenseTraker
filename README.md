@@ -8,6 +8,8 @@ Project Structure
 - backend - Backend (Swagger/WEBAPI) 
 - Database: SSMS 2022 (ExpenseTrackerfinalExamdb)
 
+![The project presentation PPT](ppt/Expense%20Tracker.pptx)
+
 Features
 
 User Features
@@ -126,3 +128,4 @@ User Features
 - Secure password management
 - Protected API endpoints
 - Role-based access control
+
